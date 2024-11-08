@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <p class="greeting-id">The ID is </p>
+        <p class="greeting-content">The content is </p>
+        <div id="tableContainer">
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            let url = 'http://localhost:1337/product/';
+            $.ajax({
+                url: url,
+                data: {format: 'json'  },
+                dataType: 'json'
+            }).then(function(data) {
+                var i = 0;
+                var table = '<table class="mainTable"><tr><th>item</th><th>image</th><th>description</th></tr>';
+                $.each(data.data, function (idx, obj) {                                   
+                    table += ('<tr>');
+                    table += ('<td>' + obj.product_id + '</td>');
+                    table += ('<td>' + obj.product_name +'></td>');
+                    table += ('<td>' + obj.product_description + '</td>');
+                    table += ('</tr>');
+                });
+                table += '</table>';
+                $("#tableContainer").html(table);
+            });
+        });
+    </script>
+</body>
+</html>
